@@ -13,27 +13,24 @@ User authentication: Users can register, log in, and log out of the application.
 ## How to run :
 
 1 - Install dependencies: Ensure all the required packages are installed by running:
-python 
+
 ```
 pip install -r requirements.txt
 ```
 2 - Run migrations: Create the necessary tables by running the database migrations:
 
-python 
 ```
 python manage.py migrate
 ```
 
 3 - Create a superuser: Set up an admin user:
 
-python 
 ```
 python manage.py createsuperuser
 ```
 
 4 - Start the server: Run the Django development server:
 
-python 
 ```
 python manage.py runserver
 ```
