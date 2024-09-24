@@ -18,7 +18,7 @@ class BlogPostTest(TestCase):
             title='Post2',
             text='Lorem Ipsum post2',
             status=Post.STATUS_CHOICES[1][0], # draft
-            author=cls.user,b
+            author=cls.user,
         )
 
     def test_post_update_view(self):

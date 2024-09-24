@@ -5,75 +5,50 @@ from .models import Post
 from .forms import PostForm
 
 class PostListView(generic.ListView):
+    """
+    displaying a list of published blog posts. It retrieves the posts from the database,
+    filtering them by their status and ordering them by the date they were last modified.
+    """
     template_name = 'blog/posts_list.html'
     context_object_name = 'posts_list'
 
     def get_queryset(self):
+        """
+        Returns a queryset of Post objects that have a status of 'pub', ordered by datetime_modified in descending order.
+        """
         return Post.objects.filter(status='pub').order_by('-datetime_modified')
 
 
 class PostDetailView(generic.DetailView):
+    """
+    displays the details of a single blog post. It uses the Post model to fetch the specific post that is being viewed.
+    """
     model = Post
     template_name = 'blog/post_detail.html'
     context_object_name = 'post'
 
 
 class PostCreateView(generic.CreateView):
+    """
+    used to create a new blog post
+    """
     form_class = PostForm
     template_name = 'blog/post_create.html'
 
 
 class PostUpdateView(generic.UpdateView):
+    """
+    allowing users to modify the details of a post.
+    """
     model = Post
     form_class = PostForm
     template_name = 'blog/post_create.html'
 
 
 class PostDeleteView(generic.DeleteView):
+    """
+    responsible for deleting a blog post. Upon successful deletion, it redirects the user to the list of posts.
+    """
     model = Post
     template_name = 'blog/post_delete.html'
     success_url = reverse_lazy('posts_list')
-
-# functional view -> view def
-# class-based view
-
-# def post_list_view(request):
-#     posts_list = Post.objects.filter(status='pub').order_by('-datetime_modified')
-#     return render(request, 'blog/posts_list.html', {'posts_list': posts_list})
-
-
-# def post_detail_view(request, pk):
-#     post = get_object_or_404(Post, pk=pk)
-#     return render(request, 'blog/post_detail.html', {'post': post})
-
-
-# def post_create_view(request):
-#     if request.method == 'POST':
-#         form = PostForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('posts_list')
-#
-#     else: # Get Request
-#         form = PostForm()
-#
-#     return render(request, 'blog/post_create.html', context={'form': form})
-
-# def post_update_view(request, pk):
-#     post = get_object_or_404(Post, pk=pk)
-#     form = PostForm(request.POST or None, instance=post)
-#
-#     if form.is_valid():
-#         form.save()
-#         return redirect('posts_list')
-#
-#     return render(request, 'blog/post_create.html', context={'form': form})
-
-# def post_delete_view(request, pk):
-#     post = get_object_or_404(Post, pk=pk)
-#
-#     if request.method == 'POST':
-#         post.delete()
-#         return redirect('posts_list')
-#
-#     return render(request, 'blog/post_delete.html', context={'post': post})
